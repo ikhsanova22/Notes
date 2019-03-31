@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="130dp"
+    android:background="#FFFAE2"
+    >
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="99dp"
+        android:layout_height="43dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="215dp"
+        android:layout_marginBottom="69dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Sure?"
+        android:textColor="#006155"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/yes_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="10dp"
+        android:background="#FFFAE2"
+        android:textColor="#006155"
+        android:textSize="15dp"
+        android:text="Yes" />
+
+    <Button
+        android:id="@+id/no_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toStartOf="@+id/yes_button"
+        android:background="#FFFAE2"
+        android:textColor="#006155"
+        android:textSize="15dp"
+        android:text="No" />
+</RelativeLayout>
