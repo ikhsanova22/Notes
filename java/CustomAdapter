@@ -1,0 +1,84 @@
+package com.example.nootes;import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.database.Cursor;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+public class CustomAdapter extends ArrayAdapter<Note> {
+
+    ArrayList<Note> notes;
+    Button delete;
+    DatabaseHelper helper;
+    Dialog DeleteDialog;
+    Button yes, no;
+
+    public CustomAdapter(Context context, ArrayList<Note> notes) {
+        super(context, R.layout.note_item);
+        this.notes = notes;
+    }
+
+    public void setNotes(ArrayList<Note> notes) {
+        this.notes = notes;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View custom_view = inflater.inflate(R.layout.note_item, parent, false);
+
+        TextView note = custom_view.findViewById(R.id.note);
+        TextView date = custom_view.findViewById(R.id.date);
+
+        note.setText(notes.get(position).getText());
+        date.setText(notes.get(position).getDate());
+
+        helper = new DatabaseHelper(getContext());
+        delete = custom_view.findViewById(R.id.delete_button);
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteDialog = new Dialog(getContext());
+                DeleteDialog.setContentView(R.layout.deletedialog);
+                DeleteDialog.setTitle("Add new note");
+
+                yes = DeleteDialog.findViewById(R.id.yes_button);
+                no = DeleteDialog.findViewById(R.id.no_button);
+
+                yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        helper.deleteNote(notes.get(position));
+                        Toast.makeText(getContext(), "Delete!!", Toast.LENGTH_SHORT).show();
+                        setNotes(helper.getNotes());
+                        DeleteDialog.cancel();
+                    }
+                });
+                no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getContext(), "NOT Delete!!", Toast.LENGTH_SHORT).show();
+                        DeleteDialog.cancel();
+                    }
+                });
+                DeleteDialog.show();
+            }
+        });
+        return custom_view;
+    }
+
+    @Override
+    public int getCount() {
+        return notes.size();
+    }
+}
+
